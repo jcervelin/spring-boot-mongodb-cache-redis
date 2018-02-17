@@ -13,13 +13,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
 @EnableScheduling
-@Transactional
 public class PostController {
 
     private static final Logger log = LoggerFactory.getLogger(PostController.class);
@@ -66,6 +64,7 @@ public class PostController {
         return postService.getTopPosts();
     }
 
+    @Cacheable(value = "post-top-name", key = "#name")
     @GetMapping("/top/names/{name}")
     public List<Post> getTopPostsByName(@PathVariable("name") String name) {
         log.info("List a name among the tops", name);

@@ -1,25 +1,20 @@
 package com.example.model;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+@Document
 public class Post implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String title;
     private String description;
     private String image;
     private int shares;
 
-    @ManyToOne(cascade=CascadeType.PERSIST)
-    @JoinColumn(name="author_id")
     private Author author;
 
     public Post() {
